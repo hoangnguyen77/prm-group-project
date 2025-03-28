@@ -61,6 +61,8 @@ fun BottomBar(navController: NavController) {
                         Screen.SignIn -> Icons.Default.Home
                         Screen.Category -> Icons.Default.Home
                         Screen.ProductDetails -> Icons.Default.Home
+                        Screen.UserInfo -> Icons.Default.Home
+                        Screen.Order -> Icons.Default.Home
                     }
                     Icon(
                         imageVector = icon,

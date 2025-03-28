@@ -37,7 +37,7 @@ fun CategorySection(
             text = "SEE ALL",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.clickable() {
+            modifier = Modifier.clickable{
                 navController.navigate("category/${category.id}")
             }
         )

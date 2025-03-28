@@ -21,11 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.prm392.data.Product
+import com.example.prm392.ui.view_models.CartViewModel
 
 @Composable
 fun ProductCard(
     product: Product,
-    navController: NavController
+    navController: NavController,
 ) {
     // Select main image if available, otherwise fallback to first image, or empty string.
     val imageUrl = product.productImages?.firstOrNull { it.isMain == true }?.imageUrl
