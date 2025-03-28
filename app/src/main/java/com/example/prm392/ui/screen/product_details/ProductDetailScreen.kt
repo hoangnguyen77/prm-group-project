@@ -1,5 +1,6 @@
 package com.example.prm392.ui.screen.product_details
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -23,17 +25,22 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.prm392.ui.view_models.AuthViewModel
+import com.example.prm392.ui.view_models.CartViewModel
 import com.example.prm392.ui.view_models.ProductViewModel
 
 @Composable
 fun ProductDetailScreen(
     productId: String,
     productViewModel: ProductViewModel,
-    onBackClick: () -> Unit = {}
+    authViewModel: AuthViewModel,
+    onBackClick: () -> Unit = {},
+    cartViewModel: CartViewModel
 ) {
+    val context = LocalContext.current
+
     val product = productViewModel.getProductById(productId)
     var isDescriptionExpanded by remember { mutableStateOf(false) }
-
     Scaffold(
         topBar = {
             Box(
@@ -158,7 +165,18 @@ fun ProductDetailScreen(
 
                     // Add to Cart Button
                     Button(
-                        onClick = { /* Handle Add to Cart */ },
+                        onClick = {
+                            if (authViewModel.userModel.value != null) {
+                                product?.let { cartViewModel.addToCart(it.id.toString()) }
+                            } else {
+                                // Show toast if user is not logged in
+                                Toast.makeText(
+                                    context,
+                                    "You must be logged in to add products to cart",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2)),
                         shape = RoundedCornerShape(8.dp)

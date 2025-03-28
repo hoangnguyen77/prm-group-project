@@ -23,8 +23,6 @@ import com.example.prm392.ui.view_models.AuthViewModel
 @Composable
 fun ProfileScreen(
     authViewModel: AuthViewModel,
-    onMyDetailsClick: () -> Unit = {},
-    onMyOrdersClick: () -> Unit = {},
     onSignInClick: () -> Unit,
     navController: NavController,
 ) {
@@ -50,8 +48,12 @@ fun ProfileScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            ProfileOption("My Details", Icons.Filled.AccountCircle, onMyDetailsClick)
-            ProfileOption("My Orders", Icons.Filled.ShoppingCart, onMyOrdersClick)
+            ProfileOption("My Details", Icons.Filled.AccountCircle, {
+                navController.navigate(Screen.UserInfo.route)
+            })
+            ProfileOption("My Orders", Icons.Filled.ShoppingCart, {
+                navController.navigate(Screen.Order.route)
+            })
             ProfileOption(
                 title = if (authViewModel.userModel.value == null) "Sign-In" else "Logout",
                 icon = Icons.Filled.ExitToApp,

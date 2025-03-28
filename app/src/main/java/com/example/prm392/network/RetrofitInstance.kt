@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 object RetrofitInstance {
 
     private const val BASE_URL = "https://production-api.stemlabs.store/"
@@ -20,7 +21,6 @@ object RetrofitInstance {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor { token })
         .build()
-
     // Shared Retrofit instance using the OkHttpClient
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
@@ -41,5 +41,23 @@ object RetrofitInstance {
 
     val authApi: AuthApiService by lazy {
         retrofit.create(AuthApiService::class.java)
+    }
+
+    // Add the Cart API service
+    val cartApi: CartApiService by lazy {
+        retrofit.create(CartApiService::class.java)
+    }
+
+    // New Profile API service
+    val profileApi: ProfileApiService by lazy {
+        retrofit.create(ProfileApiService::class.java)
+    }
+
+    val paymentApi: PaymentApiService by lazy {
+        retrofit.create(PaymentApiService::class.java)
+    }
+
+    val orderApi: OrderApiService by lazy {
+        retrofit.create(OrderApiService::class.java)
     }
 }
